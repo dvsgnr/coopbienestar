@@ -64,9 +64,14 @@
     return `${parseInt(d)} de ${MESES[parseInt(m) - 1]}, ${y}`;
   }
 
+  function slugify(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
   function renderCard(n) {
+    const slug = slugify(n.titulo);
     return `
-      <div class="news-card">
+      <a class="news-card" href="noticia.html?slug=${slug}" style="display:block;text-decoration:none;color:inherit">
         <img src="${n.imagen}" alt="${n.titulo}" class="news-card-img" loading="lazy" />
         <div class="news-card-body">
           <span class="news-tag">${n.categoria}</span>
@@ -75,7 +80,7 @@
           <p>${n.resumen}</p>
           <span class="news-card-link">Leer más →</span>
         </div>
-      </div>`;
+      </a>`;
   }
 
   fetch('content/noticias.json')

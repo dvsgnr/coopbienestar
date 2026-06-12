@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Noticia — CoopBienestar</title>
+<link rel="icon" href="https://coopbienestar.net/wp-content/uploads/2023/05/cropped-Logo-143x143.jpg" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.article-hero{position:relative;height:380px;overflow:hidden;background:var(--cb-800)}
+.article-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.article-hero-body{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 0 44px}
+.article-back{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:rgba(255,255,255,.75);
+  margin-bottom:20px;transition:color .15s}
+.article-back:hover{color:#fff}
+.article-hero-meta{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.article-cat{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold-400);background:rgba(200,144,30,.18);padding:5px 13px;border-radius:9999px}
+.article-date{font-size:14px;color:rgba(255,255,255,.65)}
+.article-hero h1{font-size:clamp(26px,4vw,44px);font-weight:600;color:#fff;line-height:1.2;
+  max-width:820px;letter-spacing:-.01em}
+
+.article-body{max-width:780px;margin:0 auto;padding:56px 24px 72px}
+.article-lead{font-size:20px;line-height:1.65;color:var(--n-700);margin-bottom:32px;
+  font-weight:400;border-left:4px solid var(--gold-500);padding-left:22px}
+.article-content{font-size:16.5px;line-height:1.75;color:var(--n-800)}
+.article-content p{margin-bottom:20px}
+.article-content p:last-child{margin-bottom:0}
+
+.article-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  margin-top:52px;padding-top:28px;border-top:1px solid var(--n-50)}
+.article-foot-lbl{font-size:13px;color:var(--n-400)}
+.article-foot-link{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;
+  color:var(--primary);transition:gap .15s}
+.article-foot-link:hover{gap:12px}
+
+/* skeleton */
+.art-skeleton{background:var(--cb-800);height:380px}
+.art-skeleton-body{max-width:780px;margin:0 auto;padding:56px 24px}
+.sk-line{height:18px;border-radius:6px;background:linear-gradient(90deg,var(--n-50) 25%,var(--n-100) 50%,var(--n-50) 75%);
+  background-size:200% 100%;animation:shimmer 1.4s infinite;margin-bottom:14px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* not found */
+.not-found{text-align:center;padding:100px 24px}
+.not-found h2{font-size:28px;font-weight:500;color:var(--n-900);margin-bottom:12px}
+.not-found p{color:var(--n-400);margin-bottom:28px}
+</style>
+</head>
+<body>
+
+<div id="nav-ph"></div>
+
+<div id="article-container">
+  <!-- skeleton while loading -->
+  <div class="art-skeleton"></div>
+  <div class="art-skeleton-body">
+    <div class="sk-line" style="width:60%;height:13px;margin-bottom:24px"></div>
+    <div class="sk-line" style="width:85%;height:38px;margin-bottom:10px"></div>
+    <div class="sk-line" style="width:70%;height:38px;margin-bottom:40px"></div>
+    <div class="sk-line" style="width:100%"></div>
+    <div class="sk-line" style="width:95%"></div>
+    <div class="sk-line" style="width:88%"></div>
+    <div class="sk-line" style="width:92%"></div>
+  </div>
+</div>
+
+<div id="footer-ph"></div>
+<script src="components.js"></script>
+<script>
+(function () {
+  const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function formatDate(str) {
+    if (!str) return '';
+    const [y, m, d] = str.split('-');
+    return `${parseInt(d)} de ${MESES[parseInt(m) - 1]} de ${y}`;
+  }
+
+  function slugify(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
+  function renderBody(cuerpo) {
+    if (!cuerpo || !cuerpo.trim()) return '';
+    return cuerpo.trim().split(/\n\n+/).map(function(p) {
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  }
+
+  function render(n) {
+    const bodyHtml = renderBody(n.cuerpo);
+    document.title = n.titulo + ' — CoopBienestar';
+    document.getElementById('article-container').innerHTML = `
+      <section class="article-hero">
+        <img class="article-hero-img" src="${n.imagen}" alt="${n.titulo}" />
+        <div class="container article-hero-body">
+          <a href="noticias.html" class="article-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Todas las noticias
+          </a>
+          <div class="article-hero-meta">
+            <span class="article-cat">${n.categoria}</span>
+            <span class="article-date">${formatDate(n.fecha)}</span>
+          </div>
+          <h1>${n.titulo}</h1>
+        </div>
+      </section>
+
+      <article class="article-body">
+        <p class="article-lead">${n.resumen}</p>
+        ${bodyHtml ? `<div class="article-content">${bodyHtml}</div>` : ''}
+        <div class="article-foot">
+          <span class="article-foot-lbl">CoopBienestar · ${formatDate(n.fecha)}</span>
+          <a href="noticias.html" class="article-foot-link">
+            Ver todas las noticias
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </article>`;
+  }
+
+  function notFound() {
+    document.getElementById('article-container').innerHTML = `
+      <div class="not-found">
+        <h2>Noticia no encontrada</h2>
+        <p>Es posible que el enlace sea incorrecto o la noticia haya sido eliminada.</p>
+        <a href="noticias.html" class="btn btn-primary">Ver todas las noticias</a>
+      </div>`;
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var slug   = params.get('slug');
+
+  if (!slug) { notFound(); return; }
+
+  fetch('content/noticias.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var noticias = data.noticias || [];
+      var match    = noticias.find(function(n) { return slugify(n.titulo) === slug; });
+      if (match) { render(match); } else { notFound(); }
+    })
+    .catch(notFound);
+}());
+</script>
+</body>
+</html>
