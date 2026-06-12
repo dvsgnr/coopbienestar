@@ -415,24 +415,43 @@ async function loadData() {
 }
 
 /* ─── AUTH ─── */
+const GH_ICON = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>`;
+
+function resetLoginBtn() {
+  const btn = document.getElementById('login-btn');
+  if (!btn) return;
+  btn.disabled = false;
+  btn.innerHTML = GH_ICON + ' Entrar con GitHub';
+}
+
 function login() {
   const btn = document.getElementById('login-btn');
   btn.disabled = true;
   btn.textContent = 'Abriendo GitHub...';
   const popup = window.open(AUTH_URL, 'ghauth', 'width=620,height=720,left=200,top=80');
+
   const handler = async (e) => {
     if (typeof e.data !== 'string') return;
+
+    /* Step 1 — Worker popup signals it's ready; we must respond to trigger token send */
+    if (e.data === 'authorizing:github') {
+      try { (e.source || popup).postMessage('authorizing:github', e.origin || '*'); } catch(_) {}
+      return;
+    }
+
     if (!e.data.startsWith('authorization:github:success:')) return;
+
+    /* Step 2 — popup sends the token */
+    window.removeEventListener('message', handler);
     try {
       const payload = JSON.parse(e.data.replace('authorization:github:success:',''));
+      if (!payload.token) throw new Error('no token');
       token = payload.token;
       sessionStorage.setItem('cb_token', token);
-      window.removeEventListener('message', handler);
-      if (popup) popup.close();
+      if (popup && !popup.closed) popup.close();
       await initApp();
     } catch(err) {
-      btn.disabled = false;
-      btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg> Entrar con GitHub`;
+      resetLoginBtn();
       toast('Error al iniciar sesión. Intenta de nuevo.');
     }
   };
@@ -446,6 +465,7 @@ async function initApp() {
 
   try {
     const ur = await fetch(`${API}/user`, { headers: ghHeaders() });
+    if (!ur.ok) throw new Error('bad_token');
     ghUser = await ur.json();
     const ava = document.getElementById('user-ava');
     if (ghUser.avatar_url) {
@@ -457,7 +477,12 @@ async function initApp() {
     await loadData();
     nav('dash');
   } catch(e) {
-    toast('Error cargando datos. Verifica tu conexión.');
+    token = null;
+    sessionStorage.removeItem('cb_token');
+    app.classList.remove('show');
+    document.getElementById('login').classList.remove('hidden');
+    resetLoginBtn();
+    if (e.message !== 'bad_token') toast('Error cargando datos. Verifica tu conexión.');
   }
 }
 
