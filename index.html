@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CoopBienestar — Cooperativa de Ahorro y Crédito · Santiago, R.D.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --g900:#1B5E20; --g700:#2E7D32; --g500:#4CAF50;
+  --g200:#A5D6A7; --g100:#E8F5E9; --g50:#F1F8F2;
+  --ink:#1C2B1C; --body:#3D4D3D; --muted:#6B7A6B;
+  --white:#FFFFFF; --off:#FAFBFA; --light:#F5F5F5;
+  --border:#E0E8E0; --border2:#C8D8C8;
+  --gold:#E0A830; --gold-d:#C8901E; --gold-700:#8A5E0F; --gold-l:#FDF3DC;
+  --serif:'Newsreader',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --nav-h:170px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--white);color:var(--body);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:var(--g200);color:var(--ink)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--white);border-bottom:1px solid var(--border);z-index:100;transition:box-shadow .2s}
+.nav.scrolled{box-shadow:0 2px 16px rgba(28,43,28,.08)}
+.nav-in{max-width:1240px;margin:0 auto;padding:0 40px;height:var(--nav-h);display:flex;align-items:center;gap:40px}
+.nav-brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.nav-brand img{width:143px;height:143px;border-radius:8px;object-fit:cover;box-shadow:0 1px 6px rgba(28,43,28,.14)}
+.nav-brand-text .name{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink);display:block;line-height:1.15;letter-spacing:-.01em}
+.nav-brand-text .sub{font-size:11px;color:var(--muted);display:block;line-height:1;margin-top:1px;letter-spacing:.04em;white-space:nowrap}
+.nav-links{display:flex;gap:2px;margin-left:auto}
+.nav-links a{font-size:15px;font-weight:500;color:var(--muted);padding:8px 14px;border-radius:4px;transition:all .15s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-d);background:var(--gold-l)}
+.nav-links a.active{color:var(--gold-d)}
+.nav-cta{margin-left:12px;background:var(--gold);color:#fff;font-size:15px;font-weight:600;padding:11px 23px;border-radius:4px;border:1.5px solid var(--gold);transition:all .2s;white-space:nowrap;flex-shrink:0}
+.nav-cta:hover{background:var(--gold-d);border-color:var(--gold-d)}
+.burger{display:none;background:none;border:none;cursor:pointer;color:var(--ink);padding:6px;margin-left:auto}
+.mob{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;z-index:99;flex-direction:column;gap:4px}
+.mob.open{display:flex}
+.mob a{font-size:15px;font-weight:500;color:var(--body);padding:12px 14px;border-radius:4px;transition:all .15s}
+.mob a:hover{color:var(--gold-d);background:var(--gold-l)}
+.mob .cta-mob{margin-top:10px;background:var(--gold);color:var(--white);text-align:center;border-radius:4px;padding:13px;font-weight:600}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;height:clamp(560px, calc(100vh - var(--nav-h) - 104px), 840px);margin-top:var(--nav-h)}
+.hero-left{padding:52px 56px 52px 40px;display:flex;flex-direction:column;justify-content:center;max-width:680px;margin-left:auto}
+.hero-left .label{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--g700);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.hero-left .label::before{content:"";display:block;width:32px;height:2px;background:var(--gold)}
+.hero-left h1{font-family:var(--serif);font-weight:300;font-size:clamp(36px,3.8vw,58px);line-height:1.12;letter-spacing:-.02em;color:var(--ink);margin-bottom:18px}
+.hero-left h1 em{font-style:italic;font-weight:400;color:var(--g700)}
+.hero-left .slogan{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(20px,1.9vw,26px);line-height:1.3;color:var(--gold-d);margin-bottom:30px}
+.hero-left p{font-size:17.5px;line-height:1.75;color:var(--muted);margin-bottom:38px;max-width:30em}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-size:15px;font-weight:600;padding:14px 29px;border-radius:4px;border:1.5px solid transparent;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
+.btn-primary{background:var(--g700);color:var(--white);border-color:var(--g700)}
+.btn-primary:hover{background:var(--g900);border-color:var(--g900)}
+.btn-line{background:transparent;color:var(--g700);border-color:var(--g700)}
+.btn-line:hover{background:var(--g50)}
+.hero-photo{position:relative;overflow:hidden}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-photo .credit{position:absolute;bottom:20px;right:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);background:rgba(0,0,0,.2);padding:5px 10px;border-radius:2px}
+
+/* STRIP */
+.strip{background:var(--g700);overflow:hidden}
+.strip{border-top:2px solid var(--gold)}
+.strip-track{display:flex;gap:0;white-space:nowrap;padding:24px 0;animation:slide 32s linear infinite;font-family:var(--serif);font-style:italic;font-size:25px;color:rgba(255,255,255,.88)}
+.strip-track .dot{color:var(--gold);font-style:normal;font-size:18px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION */
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.section{padding:96px 0}
+.section-alt{background:var(--light)}
+.sec-hd{display:flex;align-items:baseline;gap:18px;margin-bottom:52px}
+.sec-n{font-family:var(--serif);font-size:15px;color:var(--gold-d);padding-top:4px;font-style:italic}
+.sec-t{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.2vw,42px);line-height:1.1;letter-spacing:-.02em;color:var(--ink);flex:1}
+.sec-sub{max-width:22em;font-size:16px;line-height:1.6;color:var(--muted)}
+
+/* SERVICES INDEX */
+.svc-list{border-top:1px solid var(--border)}
+.svc{display:grid;grid-template-columns:52px 1.1fr 1.8fr 32px;gap:28px;align-items:center;padding:26px 6px;border-bottom:1px solid var(--border);transition:background .2s,padding .2s;cursor:pointer}
+.svc:hover{background:var(--gold-l);padding-left:18px}
+.svc .idx{font-family:var(--serif);font-size:16px;color:var(--gold-d);font-style:italic}
+.svc-name{display:flex;flex-direction:column;gap:4px}
+.svc .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-700);background:var(--gold-l);padding:3px 9px;border-radius:100px;width:fit-content}
+.svc .nm{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--ink);letter-spacing:-.01em}
+.svc .ds{font-size:15.5px;line-height:1.55;color:var(--muted)}
+.svc .arr{font-size:20px;color:var(--border2);transition:all .2s}
+.svc:hover .arr{color:var(--gold-d);transform:translateX(4px)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.photo-frame{border:1px solid var(--border2);padding:8px;background:var(--white)}
+.photo-frame img{width:100%;height:460px;object-fit:cover}
+.photo-cap{display:flex;justify-content:space-between;padding:10px 4px 3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.about-text .tag-line{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--g700);margin-bottom:18px;display:block}
+.about-text h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3vw,40px);line-height:1.14;letter-spacing:-.018em;color:var(--ink);margin-bottom:24px}
+.about-text h2 em{font-style:italic;color:var(--g700)}
+.about-text p{font-size:17px;line-height:1.75;color:var(--muted);margin-bottom:18px;max-width:36em}
+.link-arrow{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--g700);margin-top:8px;border-bottom:1.5px solid var(--gold);padding-bottom:2px;transition:gap .2s}
+.link-arrow:hover{gap:14px;border-color:var(--gold-d)}
+
+/* VALUES */
+.vals{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-left:1px solid var(--border)}
+.val{padding:36px 28px 40px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--white)}
+.val-n{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold-d);margin-bottom:18px;display:block}
+.val h4{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--ink);margin-bottom:10px;letter-spacing:-.01em}
+.val p{font-size:15px;line-height:1.65;color:var(--muted)}
+
+/* CTA BAND */
+.cta{background:var(--g900);padding:104px 0}
+.cta-in{max-width:860px}
+.cta .tag-line{color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;display:block}
+.cta h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4.5vw,60px);line-height:1.06;letter-spacing:-.02em;color:var(--white);margin-bottom:36px}
+.cta h2 em{font-style:italic;color:var(--gold)}
+.cta-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-white{background:var(--white);color:var(--g900);border-color:var(--white)}
+.btn-white:hover{background:var(--g100);border-color:var(--g100)}
+.btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.45)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.8)}
+
+/* FOOTER */
+.foot{background:var(--ink);color:rgba(255,255,255,.65);padding:68px 0 32px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.foot-brand img{width:38px;height:38px;border-radius:3px;object-fit:cover}
+.foot-brand .bn{font-family:var(--serif);font-size:18px;font-weight:500;color:var(--white)}
+.foot-blurb{font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.5);max-width:30em}
+.foot h5{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--g200);margin-bottom:16px;opacity:.7}
+.foot ul{display:flex;flex-direction:column;gap:10px}
+.foot ul a{font-size:14px;color:rgba(255,255,255,.58);transition:color .15s}
+.foot ul a:hover{color:var(--white)}
+.foot-contact p{font-size:14px;color:rgba(255,255,255,.58);line-height:1.7}
+.foot-hr{border:none;border-top:1px solid rgba(255,255,255,.08);margin-bottom:22px}
+.foot-bot{display:flex;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.3)}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr;height:auto}
+  .hero-photo{height:460px;order:-1}
+  .hero-left{max-width:100%;padding:56px 40px}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .photo-frame img{height:340px}
+  .sec-sub{display:none}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:36px}
+}
+@media(max-width:700px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+  .wrap,.nav-in{padding:0 20px}
+  .section{padding:64px 0}
+  .hero-left{padding:48px 20px}
+  .svc{grid-template-columns:40px 1fr;gap:12px}
+  .svc .ds,.svc .arr{display:none}
+  .vals{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bot{flex-direction:column;gap:8px}
+  .cta-btns{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="site-nav">
+  <div class="nav-in">
+    <a href="index.html" class="nav-brand" aria-label="CoopBienestar — Inicio">
+      <img src="https://coopbienestar.net/wp-content/uploads/2023/05/cropped-Logo-143x143.jpg" alt="CoopBienestar" />
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="sobre-nosotros.html">Nosotros</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="noticias.html">Noticias</a>
+      <a href="galeria.html">Galería</a>
+      <a href="contactos.html">Contactos</a>
+    </nav>
+    <a href="contactos.html" class="nav-cta">Hazte socio</a>
+    <button class="burger" id="burger" aria-label="Menú">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mob" id="mob">
+    <a href="index.html">Inicio</a>
+    <a href="sobre-nosotros.html">Nosotros</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="noticias.html">Noticias</a>
+    <a href="galeria.html">Galería</a>
+    <a href="contactos.html">Contactos</a>
+    <a href="contactos.html" class="cta-mob">Hazte socio</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="label">Cooperativa de ahorro y crédito</span>
+    <h1>Bienvenidos a <em style="letter-spacing:-1.2px">COOPBIENESTAR</em></h1>
+    <p class="slogan">Trabajando juntos en beneficio de todos.</p>
+    <p>Fomentamos el bienestar económico y social de nuestros asociados a través del ahorro, el crédito y la solidaridad cooperativa en Santiago de los Caballeros.</p>
+    <div class="hero-actions">
+      <a href="contactos.html" class="btn btn-primary">Hazte socio →</a>
+      <a href="servicios.html" class="btn btn-line">Ver servicios</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg?auto=compress&cs=tinysrgb&w=1280" alt="Manos unidas de asociados de diversas etnias" />
+    <span class="credit">Santiago, R.D.</span>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-track" aria-hidden="true">
+    <span>Responsabilidad&nbsp;<span class="dot">✦</span>&nbsp;Democracia&nbsp;<span class="dot">✦</span>&nbsp;Igualdad&nbsp;<span class="dot">✦</span>&nbsp;Solidaridad&nbsp;<span class="dot">✦</span>&nbsp;Transparencia&nbsp;<span class="dot">✦</span>&nbsp;Libertad&nbsp;<span class="dot">✦</span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>Responsabilidad&nbsp;<span class="dot">✦</span>&nbsp;Democracia&nbsp;<span class="dot">✦</span>&nbsp;Igualdad&nbsp;<span class="dot">✦</span>&nbsp;Solidaridad&nbsp;<span class="dot">✦</span>&nbsp;Transparencia&nbsp;<span class="dot">✦</span>&nbsp;Libertad&nbsp;<span class="dot">✦</span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="sec-n"></span>
+      <h2 class="sec-t" style="font-weight:300">Servicios financieros<br/>al servicio de la gente.</h2>
+      <p class="sec-sub">Productos de ahorro, inversión y crédito para cada etapa de la vida.</p>
+    </div>
+    <div class="svc-list">
+      <a href="servicios.html" class="svc">
+        <span class="idx">01</span>
+        <div class="svc-name"><span class="tag">Ahorro</span><span class="nm">Cuenta de aportaciones</span></div>
+        <p class="ds">Ahorra, participa y fortalece la cooperativa. Como aportante te conviertes en copropietario, generando beneficios compartidos.</p>
+        <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="svc">
+        <span class="idx">02</span>
+        <div class="svc-name"><span class="tag">Ahorro</span><span class="nm">Ahorro retirable</span></div>
+        <p class="ds">Una cuenta segura y flexible que te permite retirar tus fondos cuando lo necesites, sin restricciones.</p>
+        <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="svc">
+        <span class="idx">03</span>
+        <div class="svc-name"><span class="tag">Ahorro</span><span class="nm">Ahorros especiales</span></div>
+        <p class="ds">Beneficios exclusivos diseñados para alcanzar metas concretas con flexibilidad y ventajas adicionales.</p>
+        <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="svc">
+        <span class="idx">04</span>
+        <div class="svc-name"><span class="tag">Inversión</span><span class="nm">Certificados financieros</span></div>
+        <p class="ds">Invierte con seguridad y obtén rendimientos atractivos. Elige el plazo que mejor se adapte a tus metas.</p>
+        <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="svc">
+        <span class="idx">05</span>
+        <div class="svc-name"><span class="tag">Pagos</span><span class="nm">Órdenes de pago</span></div>
+        <p class="ds">Realiza pagos rápidos y seguros para tus transacciones comerciales y personales.</p>
+        <span class="arr">→</span>
+      </a>
+      <a href="servicios.html" class="svc">
+        <span class="idx">06</span>
+        <div class="svc-name"><span class="tag">Crédito</span><span class="nm">Créditos</span></div>
+        <p class="ds">El respaldo financiero que necesitas, con tasas competitivas y procesos ágiles.</p>
+        <span class="arr">→</span>
+      </a>
+    </div>
+    <div style="margin-top:36px">
+      <a href="servicios.html" class="link-arrow">Ver todos los servicios →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-alt">
+  <div class="wrap about-grid">
+    <div class="photo-frame">
+      <img src="img/equipo-coopbienestar.jpeg" alt="Equipo de COOPBIENESTAR" loading="lazy" />
+      <div class="photo-cap"><span>Comunidad COOPBIENESTAR</span><span>Santiago, R.D.</span></div>
+    </div>
+    <div class="about-text">
+      <span class="tag-line">02 — Quiénes somos</span>
+      <h2>Una cooperativa de personas, con <em>bienestar común</em> como norte.</h2>
+      <p>Somos una cooperativa comprometida con el progreso económico y el bienestar de nuestros asociados. Fomentamos la participación democrática, la solidaridad y la transparencia.</p>
+      <p>Nuestros socios son propietarios, no clientes — y esa diferencia lo cambia todo.</p>
+      <a href="sobre-nosotros.html" class="link-arrow">Conoce nuestra historia →</a>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="sec-n">03</span>
+      <h2 class="sec-t">Los principios que<br/>nos gobiernan.</h2>
+      <p class="sec-sub">No son palabras — son las reglas con las que tomamos cada decisión.</p>
+    </div>
+    <div class="vals">
+      <div class="val"><span class="val-n">i</span><h4>Responsabilidad</h4><p>Cuidamos los recursos de nuestros asociados, quienes ejercen sus derechos y deberes correctamente.</p></div>
+      <div class="val"><span class="val-n">ii</span><h4>Democracia</h4><p>Promovemos el derecho de elegir y ser elegidos para representar y decidir en beneficio de todos.</p></div>
+      <div class="val"><span class="val-n">iii</span><h4>Igualdad</h4><p>Todos los socios tienen la misma importancia y las mismas oportunidades dentro de la cooperativa.</p></div>
+      <div class="val"><span class="val-n">iv</span><h4>Solidaridad</h4><p>Estamos comprometidos con el bienestar de nuestros asociados y el desarrollo de la sociedad.</p></div>
+      <div class="val"><span class="val-n">v</span><h4>Transparencia</h4><p>Propiciamos el acceso a información clara y veraz, en un clima de confianza y seguridad.</p></div>
+      <div class="val"><span class="val-n">vi</span><h4>Libertad</h4><p>Cada socio participa libre y voluntariamente, apegado a las normas y al respeto mutuo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO -->
+<div style="height:420px;overflow:hidden">
+  <img src="img/premiacion-asociados.jpeg" alt="Premiación de asociados de COOPBIENESTAR" style="width:100%;height:100%;object-fit:cover;object-position:center 40%" loading="lazy" />/>
+</div>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap cta-in">
+    <span class="tag-line">Únete hoy</span>
+    <h2>Tu dinero, trabajando para tu <em>comunidad</em>.</h2>
+    <div class="cta-btns">
+      <a href="contactos.html" class="btn btn-white">Hazte socio →</a>
+      <a href="servicios.html" class="btn btn-ghost">Explorar servicios</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <img src="https://coopbienestar.net/wp-content/uploads/2023/05/cropped-Logo-143x143.jpg" alt="CoopBienestar" />
+          <span class="bn">COOPBIENESTAR</span>
+        </div>
+        <p class="foot-blurb">Cooperativa de Ahorros, Crédito y Servicios Múltiples para el Bienestar Social. Propiedad de sus socios, comprometida con Santiago de los Caballeros.</p>
+      </div>
+      <div>
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobre-nosotros.html">Nosotros</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="noticias.html">Noticias</a></li>
+          <li><a href="galeria.html">Galería</a></li>
+          <li><a href="contactos.html">Contactos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contacto</h5>
+        <div class="foot-contact">
+          <p>Av. Las Colinas, esq. Calle 23<br/>Santiago de los Caballeros<br/>República Dominicana<br/><br/>829-583-4261</p>
+        </div>
+      </div>
+    </div>
+    <hr class="foot-hr" />
+    <div class="foot-bot">
+      <span>© 2026 COOPBIENESTAR. Todos los derechos reservados.</span>
+      <span>Santiago de los Caballeros, R.D.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), {passive:true});
+  document.getElementById('burger').addEventListener('click', () => document.getElementById('mob').classList.toggle('open'));
+  const p = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(a => { if((a.getAttribute('href')||'') === p) a.classList.add('active'); });
+</script>
+</body>
+</html>
