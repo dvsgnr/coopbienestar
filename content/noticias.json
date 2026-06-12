@@ -1,0 +1,52 @@
+{
+  "noticias": [
+    {
+      "titulo": "Asamblea anual de asociados 2026",
+      "fecha": "2026-03-15",
+      "categoria": "Institución",
+      "imagen": "img/charla-asociados.jpeg",
+      "resumen": "CoopBienestar celebró su asamblea anual con la participación activa de todos sus asociados, presentando los logros del año y los planes de crecimiento para el futuro.",
+      "cuerpo": ""
+    },
+    {
+      "titulo": "Nuevos certificados financieros disponibles",
+      "fecha": "2026-01-28",
+      "categoria": "Servicios",
+      "imagen": "img/equipo-coopbienestar.jpeg",
+      "resumen": "A partir de febrero, nuestros asociados podrán acceder a los nuevos certificados financieros con tasas mejoradas y plazos más flexibles para hacer crecer sus ahorros.",
+      "cuerpo": ""
+    },
+    {
+      "titulo": "CoopBienestar en la comunidad santiaguera",
+      "fecha": "2025-12-10",
+      "categoria": "Comunidad",
+      "imagen": "img/entrega-reconocimiento-grupo.jpeg",
+      "resumen": "Participamos activamente en iniciativas comunitarias de Santiago de los Caballeros, reafirmando nuestro compromiso con el bienestar social y el desarrollo local.",
+      "cuerpo": ""
+    },
+    {
+      "titulo": "Celebramos otro año de servicio cooperativo",
+      "fecha": "2025-05-26",
+      "categoria": "Institución",
+      "imagen": "img/premiacion-asociados.jpeg",
+      "resumen": "CoopBienestar celebró un nuevo aniversario de su fundación, recordando el camino recorrido y el impacto positivo en la vida financiera de nuestros asociados.",
+      "cuerpo": ""
+    },
+    {
+      "titulo": "Taller de educación financiera para asociados",
+      "fecha": "2025-10-08",
+      "categoria": "Educación",
+      "imagen": "img/reconocimiento-colaboradora.jpeg",
+      "resumen": "Realizamos nuestro primer taller de educación financiera, ofreciendo herramientas y conocimientos para que nuestros asociados tomen mejores decisiones económicas.",
+      "cuerpo": ""
+    },
+    {
+      "titulo": "CoopBienestar suma nuevos asociados",
+      "fecha": "2025-07-02",
+      "categoria": "Crecimiento",
+      "imagen": "img/evento-san-valentin.jpeg",
+      "resumen": "Nos complace dar la bienvenida a los nuevos asociados que se unieron a nuestra familia cooperativa, fortaleciendo nuestro compromiso con el bienestar financiero colectivo.",
+      "cuerpo": ""
+    }
+  ]
+}

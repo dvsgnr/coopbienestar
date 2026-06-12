@@ -1,0 +1,32 @@
+{
+  "fotos": [
+    {
+      "imagen": "img/equipo-coopbienestar.jpeg",
+      "titulo": "Nuestro equipo"
+    },
+    {
+      "imagen": "img/charla-asociados.jpeg",
+      "titulo": "Charla a asociados"
+    },
+    {
+      "imagen": "img/premiacion-asociados.jpeg",
+      "titulo": "Premiación de asociados"
+    },
+    {
+      "imagen": "img/evento-reconocimiento-obsequios.jpeg",
+      "titulo": "Entrega de obsequios"
+    },
+    {
+      "imagen": "img/evento-san-valentin.jpeg",
+      "titulo": "Celebración en la oficina"
+    },
+    {
+      "imagen": "img/entrega-reconocimiento-grupo.jpeg",
+      "titulo": "Entrega de reconocimiento"
+    },
+    {
+      "imagen": "img/reconocimiento-colaboradora.jpeg",
+      "titulo": "Reconocimiento especial"
+    }
+  ]
+}

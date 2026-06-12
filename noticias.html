@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Noticias — CoopBienestar</title>
+<link rel="icon" href="https://coopbienestar.net/wp-content/uploads/2023/05/cropped-Logo-143x143.jpg" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="nav-ph"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-media" style="background-image:url('img/charla-asociados.jpeg')"></div>
+  <div class="container page-hero-body">
+    <span class="overline overline-gold">CoopBienestar</span>
+    <h1>Noticias</h1>
+    <p>Mantente informado sobre actividades, logros y novedades de nuestra cooperativa.</p>
+  </div>
+</section>
+
+<!-- NEWS GRID -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="overline">Últimas publicaciones</span>
+      <h2 class="h2">Anuncios e información institucional</h2>
+    </div>
+    <div class="news-grid" id="news-grid">
+      <!-- Skeleton cards while loading -->
+      <div class="news-card news-skeleton"></div>
+      <div class="news-card news-skeleton"></div>
+      <div class="news-card news-skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="container cta-band-inner">
+    <h2>¿Quieres estar al día con CoopBienestar?</h2>
+    <p>Contáctanos para recibir información sobre nuestros eventos, servicios y actividades comunitarias.</p>
+    <div class="cta-btns">
+      <a href="contactos.html" class="btn btn-primary btn-lg">Contáctanos</a>
+      <a href="galeria.html" class="btn btn-ghost btn-lg">Ver galería</a>
+    </div>
+  </div>
+</div>
+
+<div id="footer-ph"></div>
+<script src="components.js"></script>
+<style>
+.news-skeleton{height:360px;background:linear-gradient(90deg,var(--n-50) 25%,var(--n-100) 50%,var(--n-50) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+<script>
+(function () {
+  const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function formatDate(str) {
+    const [y, m, d] = str.split('-');
+    return `${parseInt(d)} de ${MESES[parseInt(m) - 1]}, ${y}`;
+  }
+
+  function renderCard(n) {
+    return `
+      <div class="news-card">
+        <img src="${n.imagen}" alt="${n.titulo}" class="news-card-img" loading="lazy" />
+        <div class="news-card-body">
+          <span class="news-tag">${n.categoria}</span>
+          <span class="news-date">${formatDate(n.fecha)}</span>
+          <h3>${n.titulo}</h3>
+          <p>${n.resumen}</p>
+          <span class="news-card-link">Leer más →</span>
+        </div>
+      </div>`;
+  }
+
+  fetch('content/noticias.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      const grid = document.getElementById('news-grid');
+      const noticias = (data.noticias || []).slice().sort(function (a, b) {
+        return new Date(b.fecha) - new Date(a.fecha);
+      });
+      if (noticias.length === 0) {
+        grid.innerHTML = '<p style="color:var(--n-400);grid-column:1/-1;text-align:center;padding:48px 0">No hay noticias publicadas aún.</p>';
+        return;
+      }
+      grid.innerHTML = noticias.map(renderCard).join('');
+    })
+    .catch(function () {
+      document.getElementById('news-grid').innerHTML =
+        '<p style="color:var(--n-400);grid-column:1/-1;text-align:center;padding:48px 0">No se pudieron cargar las noticias.</p>';
+    });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Galería — CoopBienestar</title>
+<link rel="icon" href="https://coopbienestar.net/wp-content/uploads/2023/05/cropped-Logo-143x143.jpg" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="nav-ph"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-media" style="background-image:url('img/equipo-coopbienestar.jpeg')"></div>
+  <div class="container page-hero-body">
+    <span class="overline overline-gold">CoopBienestar</span>
+    <h1>Galería</h1>
+    <p>Momentos, eventos y la comunidad que hace posible nuestra cooperativa cada día.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="overline">Nuestra comunidad</span>
+      <h2 class="h2">Actividades y eventos</h2>
+      <p class="lead">Fotografías de nuestros asociados, actividades comunitarias y momentos especiales de COOPBIENESTAR.</p>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Skeleton items while loading -->
+      <div class="gallery-item gal-skeleton"></div>
+      <div class="gallery-item gal-skeleton"></div>
+      <div class="gallery-item gal-skeleton"></div>
+      <div class="gallery-item gal-skeleton"></div>
+      <div class="gallery-item gal-skeleton"></div>
+      <div class="gallery-item gal-skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX / SLIDER -->
+<div id="lightbox" class="lb" style="display:none">
+  <button id="lb-close" class="lb-close" aria-label="Cerrar">&times;</button>
+  <button id="lb-prev" class="lb-arrow lb-prev" aria-label="Anterior">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <figure class="lb-figure">
+    <img id="lb-img" alt="" />
+    <figcaption id="lb-cap"><span id="lb-cap-text"></span><span id="lb-count"></span></figcaption>
+  </figure>
+  <button id="lb-next" class="lb-arrow lb-next" aria-label="Siguiente">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+<style>
+  .lb{position:fixed;inset:0;background:rgba(7,30,18,.95);z-index:2000;align-items:center;justify-content:center;padding:24px;gap:8px}
+  .lb[style*="flex"]{display:flex}
+  .lb-figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:90vw}
+  .lb-figure img{max-width:86vw;max-height:80vh;border-radius:10px;box-shadow:0 24px 70px rgba(0,0,0,.6);animation:lbIn .35s ease}
+  @keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+  #lb-cap{display:flex;align-items:center;gap:18px;color:rgba(255,255,255,.85);font-size:15px}
+  #lb-cap-text{font-weight:500}
+  #lb-count{color:var(--gold-400);font-size:13px;letter-spacing:.12em;font-weight:600}
+  .lb-close{position:absolute;top:22px;right:26px;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;line-height:1;opacity:.8;transition:opacity .15s}
+  .lb-close:hover{opacity:1}
+  .lb-arrow{flex-shrink:0;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.25);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s}
+  .lb-arrow:hover{background:var(--gold-400);border-color:var(--gold-400);color:#fff}
+  @media(max-width:768px){.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2}.lb-prev{left:12px}.lb-next{right:12px}.lb-figure img{max-width:92vw}}
+  .gal-skeleton{background:linear-gradient(90deg,var(--n-50) 25%,var(--n-100) 50%,var(--n-50) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="container cta-band-inner">
+    <h2>¡Sé parte de nuestra historia!</h2>
+    <p>Únete a CoopBienestar y forma parte de una comunidad que crece junta.</p>
+    <div class="cta-btns">
+      <a href="contactos.html" class="btn btn-primary btn-lg">Quiero unirme</a>
+      <a href="noticias.html" class="btn btn-ghost btn-lg">Ver noticias</a>
+    </div>
+  </div>
+</div>
+
+<div id="footer-ph"></div>
+<script src="components.js"></script>
+<script>
+(function () {
+  var slides = [];
+  var cur = 0;
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap-text');
+  var lbCount = document.getElementById('lb-count');
+
+  function render() {
+    var s = slides[cur];
+    lbImg.src = s.src;
+    lbImg.alt = s.alt;
+    lbCap.textContent = s.cap;
+    lbCount.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    lbImg.style.animation = 'none';
+    void lbImg.offsetWidth;
+    lbImg.style.animation = '';
+  }
+  function openLb(i) { cur = i; render(); lb.style.display = 'flex'; }
+  function closeLb() { lb.style.display = 'none'; }
+  function nextSlide() { cur = (cur + 1) % slides.length; render(); }
+  function prevSlide() { cur = (cur - 1 + slides.length) % slides.length; render(); }
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  document.getElementById('lb-next').addEventListener('click', function (e) { e.stopPropagation(); nextSlide(); });
+  document.getElementById('lb-prev').addEventListener('click', function (e) { e.stopPropagation(); prevSlide(); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.style.display !== 'flex') return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowRight') nextSlide();
+    else if (e.key === 'ArrowLeft') prevSlide();
+  });
+
+  fetch('content/galeria.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var fotos = data.fotos || [];
+      var grid = document.getElementById('gallery-grid');
+      if (fotos.length === 0) {
+        grid.innerHTML = '<p style="color:var(--n-400);grid-column:1/-1;text-align:center;padding:48px 0">No hay fotos en la galería aún.</p>';
+        return;
+      }
+      grid.innerHTML = fotos.map(function (f, i) {
+        return '<div class="gallery-item" data-index="' + i + '">' +
+          '<img src="' + f.imagen + '" alt="' + f.titulo + '" loading="lazy" />' +
+          '<div class="gallery-overlay"><span>' + f.titulo + '</span></div>' +
+          '</div>';
+      }).join('');
+
+      slides = fotos.map(function (f) {
+        return { src: f.imagen, alt: f.titulo, cap: f.titulo };
+      });
+
+      grid.querySelectorAll('.gallery-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          openLb(parseInt(item.dataset.index, 10));
+        });
+      });
+    })
+    .catch(function () {
+      document.getElementById('gallery-grid').innerHTML =
+        '<p style="color:var(--n-400);grid-column:1/-1;text-align:center;padding:48px 0">No se pudo cargar la galería.</p>';
+    });
+}());
+</script>
+</body>
+</html>

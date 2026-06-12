@@ -1,0 +1,91 @@
+backend:
+  name: github
+  repo: dvsgnr/coopbienestar
+  branch: main
+  base_url: https://coopbienestar-auth.pucheupierre.workers.dev
+
+media_folder: "img/uploads"
+public_folder: "img/uploads"
+
+locale: es
+
+collections:
+  - name: noticias
+    label: Noticias
+    label_singular: Noticia
+    files:
+      - name: todas-las-noticias
+        label: Todas las noticias
+        file: content/noticias.json
+        fields:
+          - name: noticias
+            label: Noticias
+            label_singular: Noticia
+            widget: list
+            summary: "{{fields.titulo}} — {{fields.fecha}}"
+            fields:
+              - name: titulo
+                label: Título
+                widget: string
+                hint: "Título de la noticia. Ej: Asamblea General Ordinaria 2026"
+              - name: fecha
+                label: Fecha
+                widget: datetime
+                date_format: YYYY-MM-DD
+                time_format: false
+                picker_utc: true
+                hint: "Fecha en que ocurrió o se publicó la noticia."
+              - name: categoria
+                label: Categoría
+                widget: select
+                options:
+                  - label: Institución
+                    value: Institución
+                  - label: Servicios
+                    value: Servicios
+                  - label: Comunidad
+                    value: Comunidad
+                  - label: Educación
+                    value: Educación
+                  - label: Crecimiento
+                    value: Crecimiento
+              - name: imagen
+                label: Foto principal
+                widget: image
+                media_folder: "/img/uploads"
+                public_folder: "img/uploads"
+                hint: "Foto que aparece en la tarjeta. JPG o PNG."
+              - name: resumen
+                label: Resumen
+                widget: text
+                hint: "Una o dos frases que se ven en la lista de noticias (máx. 200 caracteres)."
+              - name: cuerpo
+                label: Cuerpo de la noticia
+                widget: markdown
+                required: false
+                hint: "Texto completo de la noticia (opcional). Solo se usa si tienes página de detalle."
+
+  - name: galeria
+    label: Galería
+    label_singular: Foto
+    files:
+      - name: todas-las-fotos
+        label: Todas las fotos
+        file: content/galeria.json
+        fields:
+          - name: fotos
+            label: Fotos
+            label_singular: Foto
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - name: imagen
+                label: Foto
+                widget: image
+                media_folder: "/img/uploads"
+                public_folder: "img/uploads"
+                hint: "La foto que aparece en la galería. JPG o PNG."
+              - name: titulo
+                label: Descripción
+                widget: string
+                hint: "Texto que aparece al pasar el cursor sobre la foto. Ej: Premiación de asociados 2025"
